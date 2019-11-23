@@ -1,0 +1,2 @@
+Flask-RESTful==0.3.7
+influxdb==5.2.3

@@ -1,0 +1,23 @@
+version: '3'
+services:
+  rest_api:
+    build: FlaskRestfullApp/
+    ports:
+      - "4545:4545"
+    volumes:
+      - ./FlaskRestfullApp:/usr/src/app
+    environment:
+      FLASK_ENV: development
+    links:
+      - db
+
+  db:
+    image: "store/influxdata/influxdb:1.2.2"
+      # First one is HOST PORT and second one CONTAINER PORT
+      # HOST PORT for the services from the outside of swarm
+      # CONTAINER PORT for the services in the network that compose defines
+    ports:
+      - "8086:8086"
+    environment:
+      INFLUXDB_USER: "root"
+      INFLUXDB_PASSWORD: "root"
