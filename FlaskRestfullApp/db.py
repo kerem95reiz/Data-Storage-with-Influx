@@ -3,35 +3,11 @@ from influxdb import InfluxDBClient
 client = InfluxDBClient('db', 8086, 'root', 'root', 'example')
 
 
-def db_ops():
-
-    json_body = [
-        {
-            "measurement": "computer",
-            "fields": {
-                "value": "macbook"
-            }
-        }
-    ]
-
-    # client = InfluxDBClient('172.18.0.3', 8086, 'root', 'root', 'example')
-    client = InfluxDBClient('db', 8086, 'root', 'root', 'example')
-
-    client.create_database('example')
-
-    client.write_points(json_body)
-
-    result = client.query('SELECT value FROM computer')
-
-    print("Results are ", result)
-    return str(result)
-
-    # Check whether the db already exists
-
 def create_db(db_name):
 
     # Just to get the name of the databases, insead of a another data structure
     dbs = get_dbs()
+    
     if db_name in dbs:
         return "Already exists"
 
@@ -39,7 +15,6 @@ def create_db(db_name):
         client.create_database(db_name)
     except:
         return "Something went wrong during creating a new database"
-
 
     return "A new db with the name " + db_name + " created"
 
@@ -64,26 +39,34 @@ def delete_db(db_name):
     try:
         client.drop_database(db_name)
     except:
-        print("Something went wrong")
+        print("Something went wrong during deletion of database!")
         return "Something went wrong during deletion of database!"
     
     return "Database deleted successfully"
 
-
-    #If yes, then delete the db
-
 def write_data(data_points, db_name):
 
-    return True
+    data = data_points['data']
 
-# Sample Data Format
-# {
-# 		"thread": 1,
-# 		"priority": 80,
-# 		"I": 200,
-# 		"C": 500,
-# 		"max_latency": 10,
-# 		"min_latency": 10,
-# 		"avg_latency": 10,
-# 		"act_latency": 10
-# 	}
+    try:
+        result = client.write_points(data, batch_size=10000, protocol=u'json', database=db_name)
+    except:
+        result = "Something went wrong during the write process!"
+        print(result)
+
+    return result
+
+def read_data(db_name, measurement):
+
+    query_all_table = 'SELECT * FROM ' + measurement
+
+    if db_name not in get_dbs():
+        return "Such a database does not exist!"
+
+    try:
+        data = client.query(query_all_table, database=db_name)
+    except:
+        data = "Something went wrong during read process"
+        print(data)
+
+    return data
