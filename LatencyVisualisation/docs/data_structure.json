@@ -1,0 +1,22 @@
+{
+    "data": [
+        {
+            "data_points": [
+                10,
+                12,
+                250,
+                43,
+                3
+            ]
+        },
+        {
+            "attributes": [
+                {
+                    "cpu": "2",
+                    "priority": "80",
+                    "interval": "1000"
+                }
+            ]
+        }
+    ]
+}

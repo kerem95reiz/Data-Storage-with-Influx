@@ -11,6 +11,19 @@ services:
     links:
       - db
 
+
+  lat_vis:
+    build: LatencyVisualisation/
+    ports:
+      - "127.0.0.1:8050:8050"
+    volumes:
+      - ./LatencyVisualisation:/usr/src/app
+    environment:
+      FLASK_ENV: development
+    links:
+      - rest_api
+
+
   db:
     image: "store/influxdata/influxdb:1.2.2"
       # First one is HOST PORT and second one CONTAINER PORT

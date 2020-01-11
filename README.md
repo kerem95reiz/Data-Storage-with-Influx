@@ -5,9 +5,9 @@ You can store your data with the help of this RestFul API into InfluxDB.
 
 ### Installation
 
-That is the hardest part of all. That's gonna take a very long figth with you and your terminal, so better let's get started immediately.
+That is the hardest part of all. That's gonna take a very long fight with you and your terminal, so better let's get started immediately.
 
-1. `git clone https://github.com/kerem95reiz/Data-Storage-with-Influx`
+1. `git clone https://gitlab.fokus.fraunhofer.de/iiot/tub-projects/ws1920_sourcing_aggregation/tree/data_forw`
 2. `cd Data-Storage-with-Influx/`
 3. `docker-compose up`
 
